@@ -1,0 +1,585 @@
+---
+swagger: "2.0"
+info:
+  description: "Dhanraj Hardware Stores APIs"
+  version: "1.0.0"
+  title: "Dhanraj Hardware Stores"
+  contact:
+    email: "viveks.singh@gmail.com"
+  license:
+    name: "Copyright @ Dhanraj Hardware Stores"
+host: "bp-service:8083"
+basePath: "/v1/dhs"
+schemes:
+- "http"
+paths:
+  /bp:
+    get:
+      tags:
+      - "Business Partners"
+      summary: "Get all business partners"
+      description: "Returns all business partners"
+      operationId: "getBusinessPartners"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BusinessPartners"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Business Partner not found"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "Business Partners"
+      summary: "Add a new customer to the store"
+      description: ""
+      operationId: "addCustomer"
+      parameters:
+      - in: "body"
+        name: "payload"
+        description: "Business Partner."
+        required: true
+        schema:
+          $ref: "#/definitions/BusinessPartners"
+        x-exportParamName: "Payload"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/BusinessPartners"
+        401:
+          description: "Not Authorized"
+        409:
+          description: "Already exists"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /bp/{bpid}:
+    get:
+      tags:
+      - "Business Partners"
+      summary: "Get a business partner "
+      description: "Returns a single business partner"
+      operationId: "getBusinessPartnerById"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner to return"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/BusinessPartner"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Business Partner not found"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "Business Partners"
+      summary: "Update an existing business partern information"
+      description: ""
+      operationId: "updateCustomer"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner to return"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      - in: "body"
+        name: "payload"
+        description: "Business Partner."
+        required: true
+        schema:
+          $ref: "#/definitions/BusinessPartner"
+        x-exportParamName: "Payload"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/BusinessPartner"
+        401:
+          description: "Not Authorized"
+        404:
+          description: "Business Partner not found to be updated."
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "Business Partners"
+      summary: "Deletes a Business Partner"
+      description: ""
+      operationId: "deleteBusinessPartner"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner to return"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/BusinessPartner"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Not found"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /bp/{bpid}/saleorder:
+    get:
+      tags:
+      - "Business Partners Sale Order"
+      summary: "Get orders for business partner"
+      description: ""
+      operationId: "getSaleOrdersForBusinessPartner"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner for which sale order to be created"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      - in: "body"
+        name: "payload"
+        description: "Business Partner."
+        required: true
+        schema:
+          $ref: "#/definitions/SaleOrders"
+        x-exportParamName: "Payload"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SaleOrders"
+        401:
+          description: "Not Authorized"
+        404:
+          description: "Business Partner not found to be updated."
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "Business Partners Sale Order"
+      summary: "Add order for business partner"
+      description: ""
+      operationId: "addSaleOrderToBusinessPartner"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner for which sale order to be created"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      - in: "body"
+        name: "payload"
+        description: "Business Partner."
+        required: true
+        schema:
+          $ref: "#/definitions/SaleOrders"
+        x-exportParamName: "Payload"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SaleOrders"
+        401:
+          description: "Not Authorized"
+        404:
+          description: "Business Partner not found to be updated."
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+  /bp/{bpid}/saleorder/{saleorderid}:
+    get:
+      tags:
+      - "Business Partners Sale Order"
+      summary: "Get order of business partner by id"
+      description: ""
+      operationId: "getSaleOrderOfBusinessPartner"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner for which sale order to be created"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      - name: "saleorderid"
+        in: "path"
+        description: "ID of business partner for which sale order to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Saleorderid"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SaleOrder"
+        401:
+          description: "Not Authorized"
+        404:
+          description: "Business Partner not found to be updated."
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "Business Partners Sale Order"
+      summary: "Update order of a business partner"
+      description: ""
+      operationId: "updateSaleOrderOfBusinessPartner"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner for which sale order to be created"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      - name: "saleorderid"
+        in: "path"
+        description: "ID of business partner for which sale order to be updated"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Saleorderid"
+      - in: "body"
+        name: "payload"
+        description: "Business Partner."
+        required: true
+        schema:
+          $ref: "#/definitions/SaleOrder"
+        x-exportParamName: "Payload"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SaleOrder"
+        401:
+          description: "Not Authorized"
+        404:
+          description: "Business Partner not found to be updated."
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "Business Partners Sale Order"
+      summary: "Delete order of a Business Partner"
+      description: ""
+      operationId: "deleteOrderOfBusinessPartner"
+      parameters:
+      - name: "bpid"
+        in: "path"
+        description: "ID of business partner to return"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Bpid"
+      - name: "saleorderid"
+        in: "path"
+        description: "ID of business partner for which sale order to be deleted"
+        required: true
+        type: "integer"
+        format: "int64"
+        x-exportParamName: "Saleorderid"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/SaleOrder"
+        401:
+          description: "Not Authorized"
+        404:
+          description: "Business Partner not found to be updated."
+          schema:
+            $ref: "#/definitions/ErrorModel"
+        default:
+          description: "Unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+definitions:
+  Persons:
+    properties:
+      bplist:
+        type: "array"
+        items:
+          $ref: "#/definitions/Person"
+  Person:
+    type: "object"
+    required:
+    - "name"
+    - "nickname"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+        description: "Unique ID of the Business Partner"
+        readOnly: true
+      nickname:
+        type: "string"
+        example: "Vivek Singh Varanasi"
+        description: "ID of the Business Partner provided by admin"
+      name:
+        type: "string"
+        example: "Vivek"
+        description: "Name of the Business Partner"
+      contact:
+        type: "array"
+        uniqueItems: true
+        items:
+          type: "string"
+          example: "9876543210"
+      address:
+        type: "string"
+        example: "Varanasi"
+        description: "Address of the Business Partner"
+      city:
+        type: "string"
+        example: "Varanasi"
+        description: "City/Village of the Business Partner"
+  BusinessPartners:
+    properties:
+      bplist:
+        type: "array"
+        items:
+          $ref: "#/definitions/BusinessPartner"
+    example:
+      bplist:
+      - introducedby: "Santosh Kumar Singh"
+        id: 1
+        basicinfo:
+          address: "Varanasi"
+          city: "Varanasi"
+          contact:
+          - "9876543210"
+          - "9876543210"
+          nickname: "Vivek Singh Varanasi"
+          name: "Vivek"
+          id: 1
+      - introducedby: "Santosh Kumar Singh"
+        id: 1
+        basicinfo:
+          address: "Varanasi"
+          city: "Varanasi"
+          contact:
+          - "9876543210"
+          - "9876543210"
+          nickname: "Vivek Singh Varanasi"
+          name: "Vivek"
+          id: 1
+  BusinessPartner:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+        description: "Unique ID of the Business Partner"
+        readOnly: true
+      basicinfo:
+        $ref: "#/definitions/BusinessPartner_basicinfo"
+      introducedby:
+        type: "string"
+        example: "Santosh Kumar Singh"
+        description: "Introduced By"
+    example:
+      introducedby: "Santosh Kumar Singh"
+      id: 1
+      basicinfo:
+        address: "Varanasi"
+        city: "Varanasi"
+        contact:
+        - "9876543210"
+        - "9876543210"
+        nickname: "Vivek Singh Varanasi"
+        name: "Vivek"
+        id: 1
+  SaleOrders:
+    properties:
+      sale_order_list:
+        type: "array"
+        items:
+          $ref: "#/definitions/SaleOrder"
+    example:
+      sale_order_list:
+      - order_date: "2000-01-23T04:56:07.000+00:00"
+        amount: 25000
+        bpid: 6
+        payment_status: "settled"
+        checkedby: "Vijay"
+        remark: "Order delivered has issues"
+        id: 0
+        transport: "Vindhyavasini transport"
+        packedby: "Ashish"
+        delivery_status: "delivered"
+        ship_date: "2000-01-23T04:56:07.000+00:00"
+      - order_date: "2000-01-23T04:56:07.000+00:00"
+        amount: 25000
+        bpid: 6
+        payment_status: "settled"
+        checkedby: "Vijay"
+        remark: "Order delivered has issues"
+        id: 0
+        transport: "Vindhyavasini transport"
+        packedby: "Ashish"
+        delivery_status: "delivered"
+        ship_date: "2000-01-23T04:56:07.000+00:00"
+  SaleOrder:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      bpid:
+        type: "integer"
+        format: "int64"
+      order_date:
+        type: "string"
+        format: "date-time"
+      ship_date:
+        type: "string"
+        format: "date-time"
+      delivery_status:
+        type: "string"
+        description: "Payment Status"
+        enum:
+        - "delivered"
+        - "intransit"
+      amount:
+        type: "integer"
+        example: 25000
+      payment_status:
+        type: "string"
+        description: "Payment Status"
+        enum:
+        - "settled"
+        - "due"
+        - "partially_paid"
+      packedby:
+        type: "string"
+        example: "Ashish"
+        description: "Who packed the order"
+      checkedby:
+        type: "string"
+        example: "Vijay"
+        description: "Who checked the order"
+      transport:
+        type: "string"
+        example: "Vindhyavasini transport"
+        description: "transport name"
+      remark:
+        type: "string"
+        example: "Order delivered has issues"
+        description: "Any free text about this order"
+    example:
+      order_date: "2000-01-23T04:56:07.000+00:00"
+      amount: 25000
+      bpid: 6
+      payment_status: "settled"
+      checkedby: "Vijay"
+      remark: "Order delivered has issues"
+      id: 0
+      transport: "Vindhyavasini transport"
+      packedby: "Ashish"
+      delivery_status: "delivered"
+      ship_date: "2000-01-23T04:56:07.000+00:00"
+    x-model: true
+  ErrorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        description: "1000 - No Error.\n1001 - Validation Error.\n1101 - Assignment\
+          \ Error.\n1301 - Database Error.\n"
+      message:
+        type: "string"
+        description: "Describing the reason of failure"
+  BusinessPartner_basicinfo:
+    required:
+    - "name"
+    - "nickname"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+        description: "Unique ID of the Business Partner"
+        readOnly: true
+      nickname:
+        type: "string"
+        example: "Vivek Singh Varanasi"
+        description: "ID of the Business Partner provided by admin"
+      name:
+        type: "string"
+        example: "Vivek"
+        description: "Name of the Business Partner"
+      contact:
+        type: "array"
+        uniqueItems: true
+        items:
+          type: "string"
+          example: "9876543210"
+      address:
+        type: "string"
+        example: "Varanasi"
+        description: "Address of the Business Partner"
+      city:
+        type: "string"
+        example: "Varanasi"
+        description: "City/Village of the Business Partner"
+    example:
+      address: "Varanasi"
+      city: "Varanasi"
+      contact:
+      - "9876543210"
+      - "9876543210"
+      nickname: "Vivek Singh Varanasi"
+      name: "Vivek"
+      id: 1
